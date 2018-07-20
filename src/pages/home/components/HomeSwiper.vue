@@ -1,9 +1,9 @@
 <template>
   <div class='wrapper'>
-    <swiper :options="swiperOption">
+    <swiper :options="swiperOption" v-if="showSwiper">
     <!-- slides -->
     <swiper-slide v-for="item in swiperImg" :key="item.id">
-        <img :src="item.url" class="swiper-img">
+        <img :src="item.imgUrl" class="swiper-img">
     </swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
@@ -13,21 +13,22 @@
 <script>
 export default {
   name: 'HomeSwiper',
+  props: {
+    swiperImg: Array
+  },
   data: function () {
     return {
     //  官网上的配置,用来显示下面的滚动点
       swiperOption: {
         pagination: '.swiper-pagination',
+        autoplay: 3000,
         loop: true
-      },
-      swiperImg: [{
-        id: '001', url: 'http://img1.qunarzz.com/piao/fusion/1807/a1/41a802abfc4f0202.jpg_750x200_9f0cf69c.jpg'
-      }, {
-        id: '002', url: 'http://img1.qunarzz.com/piao/fusion/1702/9f/5c5bc6d9c8335a02.jpg_750x200_5182fbc0.jpg'
-      }, {
-        id: '003', url: 'http://img1.qunarzz.com/piao/fusion/1806/c5/8f384b861e4e9e02.jpg_750x200_29d574ba.jpg'
       }
-      ]
+    }
+  },
+  computed: {
+    showSwiper: function () {
+      return this.swiperImg.length
     }
   }
 }
@@ -42,7 +43,7 @@ export default {
     overflow: hidden
     width: 100%
     height: 0
-    padding-bottom: 26.67%
+    padding-bottom: 31.25%
     backgrount: #eee
     .swiper-img
       width:100%

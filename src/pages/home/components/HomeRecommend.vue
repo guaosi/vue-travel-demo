@@ -3,7 +3,7 @@
       <div class="title">热销推荐</div>
       <ul>
           <li class="item border-bottom" v-for="item in recommendList" :key="item.id">
-              <img :src="item.url" class="item-img">
+              <img :src="item.imgUrl" class="item-img">
               <div class="item-info">
                   <p class="item-title">{{item.title}}</p>
                   <p class="item-desc">{{item.desc}}</p>
@@ -16,25 +16,8 @@
 <script>
 export default{
   name: 'HomeRecommend',
-  data () {
-    return {
-      recommendList: [{
-        id: '001',
-        url: 'http://img1.qunarzz.com/sight/p0/1601/60/604aa493a5f1339190.img.jpg_200x200_a9fc0695.jpg',
-        title: '三亚亚龙湾爱立方滨海乐园',
-        desc: '三亚亚龙湾爱立方滨海乐园'
-      }, {
-        id: '002',
-        url: 'http://img1.qunarzz.com/sight/p0/1603/20/200ef684be47e1d390.water.jpg_200x200_e87f4856.jpg',
-        title: '夜游三亚湾',
-        desc: '夜游三亚湾'
-      }, {
-        id: '003',
-        url: 'http://img1.qunarzz.com/sight/p0/1802/ef/ef88e4b2fec1f385a3.img.jpg_200x200_217e7a83.jpg',
-        title: '亚特兰蒂斯失落的空间水族馆',
-        desc: '亚特兰蒂斯失落的空间水族馆'
-      }]
-    }
+  props: {
+    recommendList: Array
   }
 }
 </script>
