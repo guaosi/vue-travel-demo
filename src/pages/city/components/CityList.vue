@@ -5,7 +5,7 @@
         <div class="title border-topbottom">当前城市</div>
         <div class="button-list">
             <div class="button-wrapper">
-                <div class="button">北京</div>
+                <div class="button">{{this.city}}</div>
             </div>
         </div>
      </div>
@@ -13,14 +13,14 @@
         <div class="title border-topbottom">热门城市</div>
         <div class="button-list">
             <div class="button-wrapper" v-for="item in hotCities" :key="item.id">
-                <div class="button">{{item.name}}</div>
+                <div class="button" @click="handleSelectCity(item.name)">{{item.name}}</div>
             </div>
         </div>
      </div>
      <div class=area  v-for="(item, key) in cities" :key="key" :ref="key">
         <div class="title border-topbottom">{{key}}</div>
         <div class="item-list">
-          <div class="item border-bottom" v-for="inneritem in item" :key="inneritem.id">{{inneritem.name}}</div>
+          <div class="item border-bottom" v-for="inneritem in item" :key="inneritem.id"  @click="handleSelectCity(inneritem.name)">{{inneritem.name}}</div>
         </div>
      </div>
     </div>
@@ -28,10 +28,29 @@
 </template>
 <script>
 import BScroll from 'better-scroll'
+import {mapState, mapActions} from 'vuex'
 export default {
   name: 'CityList',
+  methods: {
+    handleSelectCity (city) {
+      // this.$store.dispatch('changeCity', city)
+      this.change(city)
+      // js路由跳转
+      this.$router.push('/')
+      // 也可以直接调用commit来调用mutations里的方法
+      // this.$store.commit('toChangeCity', city)
+    },
+    // 让mapActions里的函数直接挂到当前组件，可以直接调用
+    // ...mapActions(['changeCity'])
+    // 或者
+    ...mapActions({'change': 'changeCity'})
+  },
   mounted () {
     this.scroll = new BScroll(this.$refs.warpper)
+  },
+  computed: {
+    // 将state里的值转成当前组件的值
+    ...mapState(['city'])
   },
   props: {
     hotCities: Array,
