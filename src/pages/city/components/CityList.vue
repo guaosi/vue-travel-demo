@@ -17,7 +17,7 @@
             </div>
         </div>
      </div>
-     <div class=area  v-for="(item, key) in cities" :key="key">
+     <div class=area  v-for="(item, key) in cities" :key="key" :ref="key">
         <div class="title border-topbottom">{{key}}</div>
         <div class="item-list">
           <div class="item border-bottom" v-for="inneritem in item" :key="inneritem.id">{{inneritem.name}}</div>
@@ -35,7 +35,17 @@ export default {
   },
   props: {
     hotCities: Array,
-    cities: Object
+    cities: Object,
+    letter: String
+  },
+  watch: {
+    letter () {
+      if (this.letter) {
+        // 因为ref这里是循环输出，所以必须this.$refs[this.letter][0]才能获得真正的dom
+        let element = this.$refs[this.letter][0]
+        this.scroll.scrollToElement(element)
+      }
+    }
   }
 }
 </script>
