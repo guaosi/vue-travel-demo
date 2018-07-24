@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="banner" @click="handleClickBanner">
-      <img class="banner-img" src="//img1.qunarzz.com/sight/p0/1412/43/1217ccf8106bca9a077b58bf56bb2598.water.jpg_600x330_e71586ed.jpg">
+      <img class="banner-img" :src="bannerImg">
       <div class="banner-info">
         <div class="banner-tittle">
-            三亚宋城千古情景区
+            {{sightName}}
         </div>
         <div class="banner-number">
             <span class="iconfont banner-icon">&#xe692;</span>
-            39
+            {{gallaryImgs.length}}
         </div>
       </div>
     </div>
-    <common-gallary :imgs="imgs" v-show="showBanner" @close="closeBanner"></common-gallary>
+    <common-gallary :imgs="gallaryImgs" v-show="showBanner" @close="closeBanner"></common-gallary>
   </div>
 </template>
 <script>
@@ -30,6 +30,11 @@ export default {
     closeBanner () {
       this.showBanner = false
     }
+  },
+  props: {
+    gallaryImgs: Array,
+    sightName: String,
+    bannerImg: String
   },
   data () {
     return {

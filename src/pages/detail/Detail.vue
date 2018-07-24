@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-      <detail-banner></detail-banner>
+      <detail-banner :sightName="sightName" :bannerImg="bannerImg" :gallaryImgs="gallaryImgs"></detail-banner>
       <detail-header></detail-header>
       <detail-list :list="categoryList"></detail-list>
     </div>
@@ -9,6 +9,8 @@
 import DetailBanner from './components/DetailBanner'
 import DetailHeader from './components/DetailHeader'
 import DetailList from './components/DetailList'
+import axios from 'axios'
+
 export default {
   name: 'Detail',
   components: {
@@ -18,24 +20,35 @@ export default {
   },
   data () {
     return {
-      categoryList: [{
-        title: '成人票',
-        children: [{
-          title: '成人三馆联票',
-          children: [{
-            title: '成人三馆联票 - 某一连锁店销售'
-          }]
-        }, {
-          title: '成人五馆联票'
-        }]
-      }, {
-        title: '学生票'
-      }, {
-        title: '儿童票'
-      }, {
-        title: '特惠票'
-      }]
+      categoryList: [],
+      sightName: '',
+      bannerImg: '',
+      gallaryImgs: []
     }
+  },
+  methods: {
+    getDetailInfo () {
+      // 另一种方法带参数请求
+      axios.get('/api/detail.json', {
+        params: {
+          // 可以获取到路由定义里的id
+          id: this.$route.params.id
+        }
+      }).then(this.getDetailInfoSource)
+    },
+    getDetailInfoSource (res) {
+      let res1 = res.data
+      if (res1.ret && res1.data) {
+        let data = res1.data
+        this.categoryList = data.categoryList
+        this.sightName = data.sightName
+        this.bannerImg = data.bannerImg
+        this.gallaryImgs = data.gallaryImgs
+      }
+    }
+  },
+  mounted () {
+    this.getDetailInfo()
   }
 }
 </script>
