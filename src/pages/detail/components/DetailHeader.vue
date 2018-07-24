@@ -37,6 +37,10 @@ export default {
   },
   activated () {
     window.addEventListener('scroll', this.handleScroll)
+  },
+  // 页面发生变化时，执行下面函数，不然这种没绑定的函数会全局执行
+  deactivated () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
