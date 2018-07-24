@@ -35,7 +35,7 @@ export default {
       }
     }
   },
-  activated () {
+  mounted () {
     window.addEventListener('scroll', this.handleScroll)
   },
   // 页面发生变化时，执行下面函数，不然这种没绑定的函数会全局执行
